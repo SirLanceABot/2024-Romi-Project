@@ -37,7 +37,7 @@ public abstract class ButtonBindings
         if(romiDrivetrain != null)
         {
             romiDrivetrain.setDefaultCommand(
-                Commands.runOnce(
+                Commands.run(
                     () -> romiDrivetrain.arcadeDrive(leftYAxisSupplier, leftXAxisSupplier), 
                     romiDrivetrain
                 )

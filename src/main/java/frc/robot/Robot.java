@@ -23,7 +23,7 @@ class Robot extends TimedRobot
         // rightMotor.setInverted(true);
 
         // xbox.a()
-        //     .onTrue( Commands.runOnce( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ) )
+        //     .onTrue( Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ) )
         //     .onFalse( Commands.runOnce( () -> { leftMotor.set(0.0); rightMotor.set(0.0); } ) );
 
         ButtonBindings.createBindings(robotContainer);
@@ -56,7 +56,7 @@ class Robot extends TimedRobot
         System.out.println("Autonomous Mode");
         SmartDashboard.putString("Mode", "Autonomous");
 
-        // Commands.runOnce( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ).schedule();
+        // Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ).schedule();
 
         // Commands.waitSeconds(3.0)
         //     .andThen( Commands.runOnce( () -> { leftMotor.set(0.0); rightMotor.set(0.0); } ) ).schedule();
