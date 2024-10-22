@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.MyCommands;
 import frc.robot.subsystems.RomiDrivetrain;
 
 public abstract class ButtonBindings 
@@ -38,7 +39,9 @@ public abstract class ButtonBindings
         if(romiDrivetrain != null)
         {
             romiDrivetrain.setDefaultCommand(
-                new ArcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier, romiDrivetrain)
+                MyCommands.arcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier)
+                // romiDrivetrain.arcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier)
+                // new ArcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier, romiDrivetrain)
                 // Commands.runOnce(
                 //     () -> romiDrivetrain.arcadeDrive(leftYAxisSupplier, leftXAxisSupplier), 
                 //     romiDrivetrain

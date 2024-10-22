@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.MyCommands;
 import frc.robot.controls.ButtonBindings;
 
 class Robot extends TimedRobot
@@ -26,6 +27,7 @@ class Robot extends TimedRobot
         //     .onTrue( Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ) )
         //     .onFalse( Commands.runOnce( () -> { leftMotor.set(0.0); rightMotor.set(0.0); } ) );
 
+        MyCommands.createMyCommands(robotContainer);
         ButtonBindings.createBindings(robotContainer);
     }
 
