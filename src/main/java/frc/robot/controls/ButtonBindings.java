@@ -39,7 +39,12 @@ public abstract class ButtonBindings
         if(romiDrivetrain != null)
         {
             romiDrivetrain.setDefaultCommand(
-                MyCommands.arcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier)
+                Commands.runEnd(
+                    () -> romiDrivetrain.arcadeDrive(leftYAxisSupplier, leftXAxisSupplier),
+                    () -> { romiDrivetrain.stopDrive(); System.out.println("Stopped"); },
+                    romiDrivetrain
+                )
+                // MyCommands.arcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier)
                 // romiDrivetrain.arcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier)
                 // new ArcadeDriveCommand(leftYAxisSupplier, leftXAxisSupplier, romiDrivetrain)
                 // Commands.runOnce(

@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.MyCommands;
 import frc.robot.controls.ButtonBindings;
+import frc.robot.subsystems.RomiDrivetrain;
 
 class Robot extends TimedRobot
 {
@@ -16,6 +18,7 @@ class Robot extends TimedRobot
     // private final CommandXboxController xbox = new CommandXboxController(0);
 
     private final RobotContainer robotContainer = new RobotContainer();
+    private final RomiDrivetrain romiDrivetrain = robotContainer.getRomiDrivetrain();
     
     Robot()
     {
@@ -29,6 +32,12 @@ class Robot extends TimedRobot
 
         MyCommands.createMyCommands(robotContainer);
         ButtonBindings.createBindings(robotContainer);
+
+        // Commands.either(
+        //     Commands.print("Enabled"),
+        //     Commands.print("Disabled"),
+        //     () -> DriverStation.isEnabled()
+        // ).repeatedly().schedule();
     }
 
     @Override
@@ -57,6 +66,21 @@ class Robot extends TimedRobot
     {
         System.out.println("Autonomous Mode");
         SmartDashboard.putString("Mode", "Autonomous");
+
+        Commands.sequence(
+            
+            Commands.runOnce(
+                () -> romiDrivetrain.arcadeDrive(0.5, 0.0),
+                romiDrivetrain
+            ),
+
+            Commands.waitSeconds(3.0),
+
+            Commands.runOnce(
+                () -> romiDrivetrain.stopDrive(),
+                romiDrivetrain)
+
+        ).schedule();
 
         // Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ).schedule();
 

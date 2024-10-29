@@ -16,6 +16,7 @@ public class RomiDrivetrain extends SubsystemBase
     public RomiDrivetrain()
     {
         rightMotor.setInverted(true);
+        differentialDrive.setSafetyEnabled(false);
     }
 
     public void arcadeDrive(double driveSpeed, double rotationSpeed)
