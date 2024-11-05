@@ -67,6 +67,9 @@ class Robot extends TimedRobot
         System.out.println("Autonomous Mode");
         SmartDashboard.putString("Mode", "Autonomous");
 
+        MyCommands.drive3SecondsCommand()
+            .schedule();
+
         // Commands.sequence(
 
         //     Commands.runOnce(
@@ -83,10 +86,10 @@ class Robot extends TimedRobot
 
         // ).schedule();
 
-        Commands.runOnce( () -> romiDrivetrain.arcadeDrive(0.5, 0.0), romiDrivetrain )
-            .andThen( Commands.waitSeconds(3.0) )
-            .andThen( Commands.runOnce( () -> romiDrivetrain.stopDrive(), romiDrivetrain) )
-            .schedule();
+        // Commands.runOnce( () -> romiDrivetrain.arcadeDrive(0.5, 0.0), romiDrivetrain )
+        //     .andThen( Commands.waitSeconds(3.0) )
+        //     .andThen( Commands.runOnce( () -> romiDrivetrain.stopDrive(), romiDrivetrain) )
+        //     .schedule();
 
         // Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ).schedule();
 
