@@ -32,12 +32,26 @@ public abstract class MyCommands
     public static Command drive3SecondsCommand()
     {
         return
-        redLED.offCommand()
-            .andThen( greenLED.onCommand() )
-            .andThen( Commands.runOnce( () -> romiDrivetrain.arcadeDrive(0.5, 0.0), romiDrivetrain ) )
-            .andThen( Commands.waitSeconds(3.0) )
-            .andThen( Commands.runOnce( () -> romiDrivetrain.stopDrive(), romiDrivetrain) )
-            .andThen( greenLED.offCommand() )
-            .andThen( redLED.onCommand() );
+        Commands.parallel( redLED.offCommand(), greenLED.offCommand() )
+        .andThen( Commands.runOnce( () -> romiDrivetrain.arcadeDrive(0.5, 0.0), romiDrivetrain ) )
+        .andThen( 
+            Commands.race(
+                Commands.waitSeconds(3.0),
+                greenLED.blinkCommand()
+            )
+        )
+        .andThen( Commands.runOnce( () -> romiDrivetrain.stopDrive(), romiDrivetrain) );
+    }
+
+    public static Command autonomousDriveAndSpinCommand()
+    {
+        return
+        Commands.deadline(
+            romiDrivetrain.autonomousDriveCommand(0.5, 3.0),
+            greenLED.blinkCommand()
+        )
+        .andThen(romiDrivetrain.autonomousSpinCommand(0.4, 1.5))
+        .andThen(romiDrivetrain.autonomousDriveCommand(-0.5, 2.0))
+        .andThen(romiDrivetrain.autonomousSpinCommand(-0.4, 1.0));
     }
 }

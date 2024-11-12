@@ -43,4 +43,20 @@ public class RomiDrivetrain extends SubsystemBase
     {
         return run( () -> arcadeDrive(driveSpeedSupplier, rotationSpeedSupplier) );
     }
+
+    public Command autonomousDriveCommand(double driveSpeed, double driveTimeSeconds)
+    {
+        return
+        arcadeDriveCommand( () -> driveSpeed, () -> 0.0)
+            .withTimeout(driveTimeSeconds)
+        .andThen(stopDriveCommand());
+    }
+
+    public Command autonomousSpinCommand(double spinSpeed, double spinTimeSeconds)
+    {
+        return
+        arcadeDriveCommand( () -> 0.0, () -> spinSpeed )
+            .withTimeout(spinTimeSeconds)
+        .andThen(stopDriveCommand());
+    }
 }

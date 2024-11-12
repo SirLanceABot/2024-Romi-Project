@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,7 +19,9 @@ class Robot extends TimedRobot
     // private final CommandXboxController xbox = new CommandXboxController(0);
 
     private final RobotContainer robotContainer = new RobotContainer();
-    private final RomiDrivetrain romiDrivetrain = robotContainer.getRomiDrivetrain();
+    // private final RomiDrivetrain romiDrivetrain = robotContainer.getRomiDrivetrain();
+
+    private Command autonomousCommand = null;
     
     Robot()
     {
@@ -67,8 +70,13 @@ class Robot extends TimedRobot
         System.out.println("Autonomous Mode");
         SmartDashboard.putString("Mode", "Autonomous");
 
-        MyCommands.drive3SecondsCommand()
-            .schedule();
+        autonomousCommand = MyCommands.autonomousDriveAndSpinCommand();
+
+        if(autonomousCommand != null)
+            autonomousCommand.schedule();
+
+        // MyCommands.drive3SecondsCommand()
+        //     .schedule();
 
         // Commands.sequence(
 
@@ -103,7 +111,13 @@ class Robot extends TimedRobot
 
     @Override
     public void autonomousExit()
-    {}
+    {
+        if(autonomousCommand != null)
+        {
+            autonomousCommand.cancel();
+            autonomousCommand = null;
+        }
+    }
 
     @Override
     public void teleopInit()
