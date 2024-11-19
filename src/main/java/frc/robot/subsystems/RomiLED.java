@@ -29,12 +29,12 @@ public class RomiLED extends SubsystemBase
 
     public Command onCommand()
     {
-        return runOnce( () -> on() );
+        return runOnce( this::on );
     }
 
     public Command offCommand()
     {
-        return runOnce( () -> off() );
+        return runOnce( this::off );
     }
 
     private void blink()
@@ -49,6 +49,6 @@ public class RomiLED extends SubsystemBase
     
     public Command blinkCommand()
     {
-        return runEnd( () -> blink(), () -> off() );
+        return runEnd( this::blink, this::off );
     }    
 }

@@ -40,7 +40,7 @@ public abstract class MyCommands
                 greenLED.blinkCommand()
             )
         )
-        .andThen( Commands.runOnce( () -> romiDrivetrain.stopDrive(), romiDrivetrain) );
+        .andThen( Commands.runOnce( romiDrivetrain::stopDrive, romiDrivetrain) );
     }
 
     public static Command autonomousDriveAndSpinCommand()

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +37,7 @@ public class RomiDrivetrain extends SubsystemBase
 
     public Command stopDriveCommand()
     {
-        return runOnce( () -> stopDrive() );
+        return runOnce( this::stopDrive );
     }
 
     public Command arcadeDriveCommand(DoubleSupplier driveSpeedSupplier, DoubleSupplier rotationSpeedSupplier)
@@ -58,5 +59,19 @@ public class RomiDrivetrain extends SubsystemBase
         arcadeDriveCommand( () -> 0.0, () -> spinSpeed )
             .withTimeout(spinTimeSeconds)
         .andThen(stopDriveCommand());
+    }
+
+    private Runnable onlyDriveBackwardRunnable(DoubleSupplier driveSpeedSupplier)
+    {
+        return
+        () -> arcadeDrive(
+            () -> MathUtil.clamp(driveSpeedSupplier.getAsDouble(), -1.0, 0.0),
+            () -> 0.0
+        );
+    }
+
+    public Command onlyDriveBackwardCommand(DoubleSupplier driveSpeedSupplier)
+    {
+        return run( onlyDriveBackwardRunnable(driveSpeedSupplier) );
     }
 }
