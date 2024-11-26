@@ -34,6 +34,8 @@ public abstract class TriggerBindings
         configSuppliers();
 
         configAButton();
+        configBButton();
+        configXYButtons();
         configFrontBumper();
         configDefaultCommands();
     }
@@ -49,6 +51,27 @@ public abstract class TriggerBindings
         Trigger aButtonTrigger = xbox.a();
         aButtonTrigger
             .whileTrue( Commands.runEnd( greenLED::on, greenLED::off ) );
+    }
+
+    private static void configBButton()
+    {
+        Trigger bButtonTrigger = xbox.b();
+        bButtonTrigger
+            .onTrue(redLED.onCommand())
+            .onFalse(redLED.offCommand());
+    }
+
+    private static void configXYButtons()
+    {
+        Trigger xButtonTrigger = xbox.x();
+        Trigger yButtonTrigger = xbox.y();
+
+        xButtonTrigger.or(yButtonTrigger)
+            .onTrue( romiDrivetrain.arcadeDriveCommand( () -> 0.5, () -> 0.0 ) )
+            .onFalse( romiDrivetrain.stopDriveCommand() );
+    
+        // xButtonTrigger.and(yButtonTrigger)
+        //     .onTrue( romiDrivetrain.arcadeDriveCommand( () -> 0.5, () -> 0.0 ) );
     }
 
     private static void configFrontBumper()
