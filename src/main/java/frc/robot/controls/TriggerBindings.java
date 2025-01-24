@@ -10,7 +10,7 @@ import frc.robot.sensors.Bumper;
 import frc.robot.subsystems.RomiDrivetrain;
 import frc.robot.subsystems.RomiLED;
 
-public abstract class TriggerBindings 
+public final class TriggerBindings 
 {
     private static CommandXboxController xbox;
     private static RomiDrivetrain romiDrivetrain;

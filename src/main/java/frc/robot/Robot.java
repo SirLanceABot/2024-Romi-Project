@@ -9,33 +9,15 @@ import frc.robot.controls.TriggerBindings;
 
 class Robot extends TimedRobot
 {
-    // private final Spark leftMotor = new Spark(0);
-    // private final Spark rightMotor = new Spark(1);
-    // private final CommandXboxController xbox = new CommandXboxController(0);
-
     private final RobotContainer robotContainer = new RobotContainer();
-    // private final RomiDrivetrain romiDrivetrain = robotContainer.getRomiDrivetrain();
-
     private Command autonomousCommand = null;
     
     Robot()
     {
         System.out.println("Hello World!");
 
-        // rightMotor.setInverted(true);
-
-        // xbox.a()
-        //     .onTrue( Commands.run( () -> { leftMotor.set(0.15); rightMotor.set(0.15); } ) )
-        //     .onFalse( Commands.runOnce( () -> { leftMotor.set(0.0); rightMotor.set(0.0); } ) );
-
         MyCommands.createMyCommands(robotContainer);
         TriggerBindings.createBindings(robotContainer);
-
-        // Commands.either(
-        //     Commands.print("Enabled"),
-        //     Commands.print("Disabled"),
-        //     () -> DriverStation.isEnabled()
-        // ).repeatedly().schedule();
     }
 
     @Override
